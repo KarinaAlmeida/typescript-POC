@@ -1,0 +1,37 @@
+{
+  "name": "typescript-poc",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "POC focada nos estudos de typescript, com a criação de uma API com CRUD.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/server.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KarinaAlmeida/typescript-POC.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KarinaAlmeida/typescript-POC/issues"
+  },
+  "homepage": "https://github.com/KarinaAlmeida/typescript-POC#readme",
+  "devDependencies": {
+    "@types/pg": "^8.6.6",
+    "nodemon": "^2.0.22",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.3"
+  },
+  "dependencies": {
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "http-status": "^1.6.2",
+    "joi": "^17.9.1",
+    "pg": "^8.10.0"
+  }
+}
