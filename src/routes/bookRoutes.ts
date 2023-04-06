@@ -8,10 +8,11 @@ const bookRoutes = Router();
 bookRoutes.post('/', validateSchema(bookSchema.books), bookControllers.create)
 bookRoutes.get('/all', bookControllers.getAll)
 
-bookRoutes.patch('/', bookControllers.updateStatus)
+bookRoutes.post('/:id',  validateSchema(bookSchema.review), bookControllers.updateStatus)
 
-bookRoutes.post('/review', validateSchema(bookSchema.review), bookControllers.reviewBook)
-bookRoutes.delete('/', bookControllers.deleteBook)
+
+bookRoutes.delete('/:id', bookControllers.deleteBook)
+
 bookRoutes.get('/', bookControllers.getPublisher)
 
 

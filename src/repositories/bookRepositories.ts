@@ -1,5 +1,6 @@
+import { ParsedQs } from "qs";
 import connectionDb from "../config/database.js";
-import { createBook } from "../protocols/type.js";
+import { createBook, publishType, reviewType } from "../protocols/type.js";
 
 async function findDuplicate (newBook:createBook){
     return await connectionDb.query(
@@ -33,9 +34,60 @@ async function getAll () {
     )
 }
 
+async function read (book_id:Number, review:reviewType) {
+     await connectionDb.query (
+        `
+        UPDATE books 
+        SET status = true 
+        WHERE id = $1 
+        `,
+        [book_id]
+
+    );
+
+    await connectionDb.query(
+        `
+          INSERT INTO review 
+          (rate, review, book_id)
+          VALUES ($1, $2, $3)
+        `,
+        [review.rate, review.review, book_id]
+      );
+}
+
+async function getNumbers (publi:publishType) {
+    return await connectionDb.query(
+        `
+        SELECT COUNT(*) 
+        FROM books
+        WHERE LOWER (publisher) LIKE($1)
+        `, 
+        [`%${publi}%`]
+    )
+}
+
+async function getBookById (id:Number) {
+    return await connectionDb.query(`
+    SELECT * FROM books
+    WHERE id = $1
+`, [id])
+}
+
+async function deleteBook (id:Number) {
+    return await connectionDb.query(`
+    DELETE FROM books
+    WHERE id = $1
+`, [id])
+}
+
+
 export default {
     findDuplicate,
     create,
-    getAll
+    getAll,
+    read,
+    getNumbers,
+    getBookById,
+    deleteBook
 
 }

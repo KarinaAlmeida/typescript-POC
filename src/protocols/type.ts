@@ -4,3 +4,12 @@ export type createBook = {
     author: string,
     publisher: string
 }
+
+export type reviewType={
+    rate: number,
+    review:string
+}
+
+export type publishType={
+    publi: string
+}

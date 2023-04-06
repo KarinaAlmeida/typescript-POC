@@ -1,6 +1,8 @@
-import { createBook } from "../protocols/type.js";
+import { createBook, publishType, reviewType } from "../protocols/type.js";
 import bookRepositories from "../repositories/bookRepositories.js";
 import error from "../errors/index.js";
+import QueryString, { ParsedQs } from "qs";
+import { string } from "joi";
 
 
 
@@ -21,12 +23,36 @@ async function getAll () {
     return rows
      }
     
-async function updateStatus () {
+async function updateStatus (book_id:Number, review:reviewType) {
+   
+    // const bookStatus = await bookRepositories.getAll()
+    // if (bookStatus.status) {
+    //     throw new Error ('this appointment is already confirmed')
+    // }
+
+    return await bookRepositories.read(book_id, review)
 }
 
+async function getNumbers(publi:publishType) {
+    const {rows, rowCount} = await bookRepositories.getNumbers(publi);
+
+    if (!rowCount) throw error.notFoundError()
+    
+    return rows
+     }
+
+async function deleteBook (id: Number) {
+    const {rowCount} = await bookRepositories.getBookById(id)
+    if(!rowCount) throw error.notFoundError()
+
+    await bookRepositories.deleteBook(id)  
+}
+    
 
 export default {
     create,
     getAll,
-    updateStatus
+    updateStatus,
+    getNumbers,
+    deleteBook
 }
